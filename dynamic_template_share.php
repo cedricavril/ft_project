@@ -215,6 +215,7 @@ $i = 0;
 $j = 0; 
 foreach ($offresData['resultats'] as $offre) {
 //problème ici avec Undefined array key 1, essayer peut être ===  
+// test pour le commit
 if ($i == $offersIndexToSend[$j]) {
     $j++;
     if ($offre['typeContrat'] == 'MIS') $offre['typeContrat'] = 'Intérim (MIS)';
