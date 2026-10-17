@@ -579,7 +579,7 @@ style="font-size:0px;padding:0px 24px;padding-top:22px;padding-right:24px;paddin
                                     <div
 style="font-family:system-ui, sans-serif;font-size:14px;font-weight:300;line-height:22px;text-align:left;color:#ffffff;">
                                       <p>Ce courriel vous est envoyé
-                                        automatiquement, merci de ne pas
+                                        automatiquement par <a href="https://francetrouvaille.naytheet.fr">francetrouvaille.naytheet.fr</a></p>, merci de ne pas
                                         utiliser la fonction "répondre à
                                         l'expéditeur".</p>
                                       <p>Pour plus d’informations sur la
