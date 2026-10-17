@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -214,8 +215,7 @@ style="border-spacing:0;margin:0 auto;padding:0;width:90%;max-width:552px;"
 $i = 0;
 $j = 0; 
 foreach ($offresData['resultats'] as $offre) {
-//problème ici avec Undefined array key 1, essayer peut être ===  
-if ($i == $offersIndexToSend[$j]) {
+if ($i === ($offersIndexToSend[$j] ?? null)) {
     $j++;
     if ($offre['typeContrat'] == 'MIS') $offre['typeContrat'] = 'Intérim (MIS)';
 ?>
