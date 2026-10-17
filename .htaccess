@@ -1,0 +1,3 @@
+<FilesMatch "^(config\.ini|config\..*\.ini)$">
+    Require all denied
+</FilesMatch>

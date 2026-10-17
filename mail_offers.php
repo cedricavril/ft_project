@@ -16,7 +16,7 @@ function callback($buffer, $offresData, $email) {
         exit;
     }
 
-    $subject = 'un test depuis francetrouvaille.naytheet.fr';
+    $subject = 'nouvelle(s) offre(s) envoyée(s) depuis francetrouvaille.naytheet.fr';
 
     if ($_SESSION['total'] > 50) $suffix = '<pre class=\'error-message\'>Vous pourrez créer une alerte dès que le nombres d\'offres est inférieur à 50</pre>';
     else $suffix = '<div class=\'btn-row modal-single-button\'><button type="button" id="create_alert" class="btn btn-primary" onclick="showModal(\'alert-form\'); document.getElementById(\'alertEmail\').focus();">Créer une alerte</button></div>';
