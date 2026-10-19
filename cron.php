@@ -22,6 +22,10 @@ $db->getConnection();
 $db->monthly_purge();
 $db->yearly_purge();
 
+var_dump($emailsAlreadyExpired);
+var_dump($emailsExpiringNextWeek);
+
+
 $old_offers = $db->alert_get_all_old_offers();
 $all_alerts = $db->alerte_get_all();
 

@@ -190,11 +190,51 @@ ON ft_alerte.email = ft_old_offers.email WHERE ft_alerte.frequence='$freq' ORDER
 
     public function yearly_purge() {
         // todo : avertir l'user par son email une semaine avant, 
-        //puis avertir que son alerte est supprimée juste avant suppression ci dessous
-        
-        $perempted_emails = $this->pdo->query("SELECT email FROM ft_alerte WHERE created_at < NOW() - INTERVAL 11 MONTH");
+        //puis avertir que son alerte est supprimée juste après suppression ci dessous
+
+// continuer ici Cf. GPT
+$stmt = $this->pdo->query("
+    SELECT
+        email,
+        CASE
+            WHEN created_at < NOW() - INTERVAL 1 YEAR
+                THEN 'already_expired'
+            ELSE 'expires_next_week'
+        END AS situation
+    FROM ft_alerte
+    WHERE created_at < DATE_SUB(
+        DATE_ADD(NOW(), INTERVAL 1 WEEK),
+        INTERVAL 1 YEAR
+    )
+");
+
+$alerts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$emailsAlreadyExpired = [];
+$emailsExpiringNextWeek = [];
+
+foreach ($alerts as $alert) {
+    if ($alert['situation'] === 'already_expired') {
+        $emailsAlreadyExpired[] = $alert['email'];
+    } else {
+        $emailsExpiringNextWeek[] = $alert['email'];
+    }
+}
+
+// todo : retourner les 2 tableaux
+
+// Delete expired alerts
+// $stmt = $this->pdo->query("
+//     DELETE FROM ft_alerte
+//     WHERE created_at < NOW() - INTERVAL 1 YEAR
+// ");
+
+
+
+
+        // $perempted_emails = $this->pdo->query("SELECT email FROM ft_alerte WHERE created_at < NOW() - INTERVAL 11 MONTH");
         
 
-        $this->pdo->query("DELETE FROM ft_alerte WHERE created_at < NOW() - INTERVAL 1 YEAR");
+        // $this->pdo->query("DELETE FROM ft_alerte WHERE created_at < NOW() - INTERVAL 1 YEAR");
     }
 }
