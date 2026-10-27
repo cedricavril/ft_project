@@ -219,15 +219,11 @@ foreach ($alerts as $alert) {
     }
 }
 
-
-
-// todo : retourner les 2 tableaux
-
 // Delete expired alerts
-// $stmt = $this->pdo->query("
-//     DELETE FROM ft_alerte
-//     WHERE created_at < NOW() - INTERVAL 1 YEAR
-// ");
+$stmt = $this->pdo->query("
+    DELETE FROM ft_alerte
+    WHERE created_at < NOW() - INTERVAL 1 YEAR
+");
 
 return ["emailsAlreadyExpired" => $emailsAlreadyExpired, "emailsExpiringNextWeek" => $emailsExpiringNextWeek];
 

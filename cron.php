@@ -26,13 +26,19 @@ $emailRecipients = $db->yearly_purge();
 
 //continuer ici
 // faire une boucle dès que ça marche
-if ($emailRecipients['emailsAlreadyExpired']) mail_using_PHPMailer($emailRecipients['emailsAlreadyExpired'][0], 'email already expired', 'expiré');
-if ($emailRecipients['emailsExpiringNextWeek']) mail_using_PHPMailer($emailRecipients['emailsExpiringNextWeek'][0], 'email expiring next week', 'expire dans une semaine');
+if ($emailRecipients['emailsAlreadyExpired']) {
+	foreach ($emailRecipients['emailsAlreadyExpired'] as $email) {
+		mail_using_PHPMailer($email, 'Alerte expirée', "Votre alerte de recherche sur <a href='https://francetrouvaille.naytheet.fr'>https://francetrouvaille.naytheet.fr</a> a expiré.");
+	}
+}
+if ($emailRecipients['emailsExpiringNextWeek']) {
+	foreach ($emailRecipients['emailsExpiringNextWeek'] as $email) {
+		mail_using_PHPMailer($email, 'Alerte sur le point d\'expirer', "Votre alerte de recherche sur <a href='https://francetrouvaille.naytheet.fr'>https://francetrouvaille.naytheet.fr</a> expirera dans une semaine.");
+	}
+}
 
 $old_offers = $db->alert_get_all_old_offers();
 $all_alerts = $db->alerte_get_all();
-
-
 
 	// if first day of week, get all users, otherwise get daily ones only
 	$users = (date('N') === '1') ? $db->alerte_get_all() : $db->alerte_get_all_by_freq('daily');
