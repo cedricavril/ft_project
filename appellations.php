@@ -1,16 +1,23 @@
 <?php
 
-$ENABLE_CACHE_DATA = true;
-define("CLIENT_ID", 'PAR_apptest_3d1c0f5aa8a316be3437f193171910e03af7a9b2ce28363535b77d2d94d46786');
-define("CLIENT_SECRET", '1045282671e144770874ff7ccf5da81375f5b8c2f5520e89e64433c5febe77ca');
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
-function get_token() {
+$config = parse_ini_file(__DIR__ . '/config.ini', true);
+
+$FTconfig = $config['FT'];
+$client = $FTconfig['CLIENT_ID'];
+$secret = $FTconfig['CLIENT_SECRET'];
+$ENABLE_CACHE_DATA = true;
+
+function get_token($client, $secret) {
     $url = "https://entreprise.francetravail.fr/connexion/oauth2/access_token?realm=/partenaire";
 
     $payload = http_build_query([
         'grant_type'    => 'client_credentials',
-        'client_id'     => CLIENT_ID,
-        'client_secret' => CLIENT_SECRET,
+        'client_id'     => $client,
+        'client_secret' => $secret,
         'scope'         => 'api_rome-metiersv1 nomenclatureRome'
     ]);
 
@@ -54,7 +61,7 @@ function get_token() {
     }
 
     // 0. Get the token from the session OR get a new one through the function below
-    $token = $_SESSION['token'] ?? get_token();
+    $token = $_SESSION['token'] ?? get_token($client, $secret);
 
     // 2. Fetch libelles and rome codes from API
     $url = "https://api.francetravail.io/partenaire/rome-metiers/v1/metiers/appellation?champs=libelle,romeparent";

@@ -19,12 +19,15 @@ include_once("database.php");
 $db = new DataBase();
 $db->getConnection();
 
+// purging old offers 
 $db->monthly_purge();
-$db->yearly_purge();
+// purging alerts
+$emailRecipients = $db->yearly_purge();
 
-var_dump($emailsAlreadyExpired);
-var_dump($emailsExpiringNextWeek);
-
+//continuer ici
+// faire une boucle dès que ça marche
+if ($emailRecipients['emailsAlreadyExpired']) mail_using_PHPMailer($emailRecipients['emailsAlreadyExpired'][0], 'email already expired', 'expiré');
+if ($emailRecipients['emailsExpiringNextWeek']) mail_using_PHPMailer($emailRecipients['emailsExpiringNextWeek'][0], 'email expiring next week', 'expire dans une semaine');
 
 $old_offers = $db->alert_get_all_old_offers();
 $all_alerts = $db->alerte_get_all();
